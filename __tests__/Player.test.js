@@ -47,7 +47,7 @@ test('creates a player object', () => {
   
     expect(player.isAlive()).toBeFalsy();
   });
-  
+
 //see if the correct amount of health is being subtracted
   test("subtracts from player's health", () => {
     const player = new Player('Dave');
@@ -60,4 +60,32 @@ test('creates a player object', () => {
     player.reduceHealth(99999);
   
     expect(player.health).toBe(0);
+  });
+
+//player's attack value 
+test("gets player's attack value", () => {
+    const player = new Player('Dave');
+    player.strength = 10;
+  
+    expect(player.getAttackValue()).toBeGreaterThanOrEqual(5);
+    expect(player.getAttackValue()).toBeLessThanOrEqual(15);
+  });
+
+  test('adds a potion to the inventory', () => {
+    const player = new Player('Dave');
+    const oldCount = player.inventory.length;
+  
+    player.addPotion(new Potion());
+  
+    expect(player.inventory.length).toBeGreaterThan(oldCount);
+  });
+
+  test('uses a potion from inventory', () => {
+    const player = new Player('Dave');
+    player.inventory = [new Potion(), new Potion(), new Potion()];
+    const oldCount = player.inventory.length;
+  
+    player.usePotion(1);
+  
+    expect(player.inventory.length).toBeLessThan(oldCount);
   });
